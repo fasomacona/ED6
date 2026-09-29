@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tema 6: Métodos de Búsqueda | AED-1026</title>
+  <meta name="description" content="Material didáctico del Tema 6: búsqueda secuencial, binaria y por funciones hash.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">ED</span>
+        Estructura de Datos
+      </a>
+      <nav>
+        <a href="index.html" class="active">Inicio</a>
+        <a href="secuencial.html">6.1 Secuencial</a>
+        <a href="binaria.html">6.2 Binaria</a>
+        <a href="hash.html">6.3 Hash</a>
+        <a href="comparativa.html">Comparativa</a>
+        <a href="practica.html">Práctica</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Tema 6: Métodos de Búsqueda</h1>
+      <p>
+        Búsqueda secuencial, búsqueda binaria y búsqueda por funciones hash:
+        funcionamiento, complejidad, requisitos y cuándo aplicar cada una.
+      </p>
+      <div class="hero-meta">
+        <span>📚 Estructura de Datos (AED-1026)</span>
+        <span>🎓 Ingeniería Informática / Sistemas Computacionales</span>
+        <span>🏫 Tecnológico Nacional de México</span>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="card">
+      <h3>🎯 Competencia específica del tema</h3>
+      <p>
+        <strong>Conoce, comprende y aplica los algoritmos de búsqueda para el uso adecuado
+        en el desarrollo de aplicaciones que permita solucionar problemas del entorno.</strong>
+      </p>
+    </div>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">0</span> Objetivos de aprendizaje</h2>
+      <div class="grid-2">
+        <div class="feature-card">
+          <div class="icon">🔎</div>
+          <h3>Búsqueda secuencial</h3>
+          <p>Recorrer una colección elemento a elemento; aplicar con o sin centinela.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📐</div>
+          <h3>Búsqueda binaria</h3>
+          <p>Aprovechar el orden para reducir a la mitad el espacio de búsqueda en cada paso.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🗂️</div>
+          <h3>Búsqueda hash</h3>
+          <p>Usar funciones hash y tablas para acceso casi constante; gestionar colisiones.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">📊</div>
+          <h3>Comparar y elegir</h3>
+          <p>Medir eficiencia y seleccionar el método según tamaño, orden y operaciones.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">☰</span> Contenido del tema</h2>
+      <div class="toc">
+        <ol>
+          <li><a href="secuencial.html"><strong>6.1 Búsqueda secuencial</strong></a> — Lineal, con centinela, complejidad.</li>
+          <li><a href="binaria.html"><strong>6.2 Búsqueda binaria</strong></a> — Requisito de orden, iterativa y recursiva.</li>
+          <li><a href="hash.html"><strong>6.3 Búsqueda por funciones de HASH</strong></a> — Función hash, colisiones, encadenamiento y direccionamiento abierto.</li>
+          <li><a href="comparativa.html"><strong>Comparativa</strong></a> — Cuadros de complejidad y criterios de selección.</li>
+          <li><a href="practica.html"><strong>💻 Parte práctica (Jupyter Notebook)</strong></a></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">💡</span> El problema de la búsqueda</h2>
+      <div class="card">
+        <p>
+          Dada una colección de elementos y una <strong>clave</strong>, determinar si la clave
+          está presente y, en su caso, recuperar la información asociada o la posición.
+        </p>
+        <ul>
+          <li>Operación fundamental en bases de datos, diccionarios, índices y casi todo software.</li>
+          <li>La eficiencia depende de la <strong>organización de los datos</strong> (desordenados, ordenados, tabla hash).</li>
+          <li>Hay un compromiso: estructuras que buscan más rápido suelen costar más al insertar o requieren más memoria.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="btn-group">
+      <a href="secuencial.html" class="btn btn-primary">Comenzar → 6.1 Secuencial</a>
+      <a href="practica.html" class="btn btn-outline">Ir a la práctica</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div>
+        <strong>Estructura de Datos (AED-1026)</strong><br>
+        Tema 6 · Tecnológico Nacional de México · Material didáctico abierto
+      </div>
+      <div>Listo para GitHub Pages</div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

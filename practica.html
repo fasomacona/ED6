@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctica · Tema 6 | Estructura de Datos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">ED</span>
+        Estructura de Datos
+      </a>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="secuencial.html">6.1 Secuencial</a>
+        <a href="binaria.html">6.2 Binaria</a>
+        <a href="hash.html">6.3 Hash</a>
+        <a href="comparativa.html">Comparativa</a>
+        <a href="practica.html" class="active">Práctica</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 2rem;">
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a> › Parte práctica (Jupyter Notebook)
+    </div>
+
+    <h1 class="section-title"><span class="num">💻</span> Parte práctica — Jupyter Notebook</h1>
+
+    <div class="card">
+      <p>
+        Implementación de búsqueda secuencial, binaria y tabla hash; medición de tiempos
+        y diseño de un método propio de búsqueda.
+      </p>
+    </div>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">1</span> Cómo usar</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Local</h3>
+          <pre style="margin:0.5rem 0"><code>pip install jupyter pandas
+jupyter notebook notebooks/practica_tema6.ipynb</code></pre>
+        </div>
+        <div class="card">
+          <h3>Google Colab</h3>
+          <p>Sube <code>practica_tema6.ipynb</code> y ábrelo con Colaboratory.</p>
+        </div>
+      </div>
+      <p style="margin-top: 1rem;">
+        <a href="notebooks/practica_tema6.ipynb" class="btn btn-primary" download>⬇️ Descargar practica_tema6.ipynb</a>
+      </p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">2</span> Contenido del notebook</h2>
+      <div class="card"><h3>Ejercicio 1 — Búsqueda secuencial y binaria</h3>
+        <p>Implementar ambas; verificar corrección.</p></div>
+      <div class="card"><h3>Ejercicio 2 — Tabla hash con encadenamiento</h3>
+        <p>Insertar, buscar y eliminar; observar el factor de carga.</p></div>
+      <div class="card"><h3>Ejercicio 3 — Medición de eficiencia</h3>
+        <p>Comparar tiempos de los tres métodos sobre n datos generados aleatoriamente.</p></div>
+      <div class="card"><h3>Ejercicio 4 — Método propio</h3>
+        <p>Diseñar una variante (por ejemplo búsqueda secuencial con centinela, o binaria que devuelva el rango de duplicados).</p></div>
+      <div class="card"><h3>Ejercicio 5 — Cuadro comparativo y conclusiones</h3>
+        <p>Complejidad teórica + resultados empíricos; justificar la elección del método.</p></div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">3</span> Criterios de evaluación</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Criterio</th><th>Peso</th></tr></thead>
+          <tbody>
+            <tr><td>Implementaciones correctas</td><td>35 %</td></tr>
+            <tr><td>Medición y comparativa empírica</td><td>25 %</td></tr>
+            <tr><td>Método propio y análisis</td><td>25 %</td></tr>
+            <tr><td>Claridad y estilo</td><td>15 %</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="btn-group">
+      <a href="comparativa.html" class="btn btn-outline">← Comparativa</a>
+      <a href="index.html" class="btn btn-primary">Volver al inicio</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div><strong>Estructura de Datos (AED-1026)</strong> · Práctica Tema 6</div>
+      <div>Material didáctico abierto</div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

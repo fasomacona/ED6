@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparativa de búsqueda | Tema 6</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">ED</span>
+        Estructura de Datos
+      </a>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="secuencial.html">6.1 Secuencial</a>
+        <a href="binaria.html">6.2 Binaria</a>
+        <a href="hash.html">6.3 Hash</a>
+        <a href="comparativa.html" class="active">Comparativa</a>
+        <a href="practica.html">Práctica</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 2rem;">
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a> › Comparativa de métodos de búsqueda
+    </div>
+
+    <h1 class="section-title"><span class="num">📊</span> Comparativa de métodos de búsqueda</h1>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">1</span> Complejidad</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Método</th>
+              <th>Requisito</th>
+              <th>Mejor</th>
+              <th>Promedio</th>
+              <th>Peor</th>
+              <th>Espacio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Secuencial</td>
+              <td>Ninguno</td>
+              <td><span class="badge badge-o1">O(1)</span></td>
+              <td><span class="badge badge-on">O(n)</span></td>
+              <td><span class="badge badge-on">O(n)</span></td>
+              <td><span class="badge badge-o1">O(1)</span></td>
+            </tr>
+            <tr>
+              <td>Binaria</td>
+              <td>Datos ordenados</td>
+              <td><span class="badge badge-o1">O(1)</span></td>
+              <td><span class="badge badge-ologn">O(log n)</span></td>
+              <td><span class="badge badge-ologn">O(log n)</span></td>
+              <td><span class="badge badge-o1">O(1)</span>*</td>
+            </tr>
+            <tr>
+              <td>Hash</td>
+              <td>Función hash + tabla</td>
+              <td><span class="badge badge-o1">O(1)</span></td>
+              <td><span class="badge badge-o1">O(1)</span></td>
+              <td><span class="badge badge-on">O(n)</span></td>
+              <td><span class="badge badge-on">O(m)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted);">* Versión iterativa. La recursiva usa O(log n) en la pila.</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">2</span> Criterios de selección</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Situación</th>
+              <th>Método recomendado</th>
+              <th>Motivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lista pequeña o búsqueda ocasional</td>
+              <td>Secuencial</td>
+              <td>Simple; no requiere preparación</td>
+            </tr>
+            <tr>
+              <td>Datos estáticos ordenados, muchas búsquedas</td>
+              <td>Binaria</td>
+              <td>O(log n) garantizado; poco espacio extra</td>
+            </tr>
+            <tr>
+              <td>Muchas búsquedas e inserciones/eliminaciones</td>
+              <td>Hash (dict/set)</td>
+              <td>O(1) promedio en todas las operaciones</td>
+            </tr>
+            <tr>
+              <td>Necesitas orden y rangos (vecinos, percentiles)</td>
+              <td>Árbol balanceado / binaria sobre arreglo ordenado</td>
+              <td>Hash no preserva orden</td>
+            </tr>
+            <tr>
+              <td>Lista enlazada</td>
+              <td>Secuencial</td>
+              <td>No hay acceso aleatorio eficiente para binaria</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">3</span> Relación con ordenamiento</h2>
+      <div class="card">
+        <p>
+          Ordenar para poder usar búsqueda binaria tiene costo O(n log n).
+          Compensa si el número de búsquedas <em>k</em> es grande:
+        </p>
+        <ul>
+          <li>Solo secuencial: costo total ≈ k · n</li>
+          <li>Ordenar + binaria: ≈ n log n + k · log n</li>
+        </ul>
+        <p>
+          Cuando k ≫ log n, ordenar + binaria (o usar una tabla hash) es claramente mejor.
+        </p>
+        <div class="callout success">
+          <strong>📝 Actividad del programa</strong>
+          Aplicar los métodos de búsqueda a un conjunto de n datos y determinar su eficiencia;
+          elaborar cuadros comparativos de complejidad en tiempo y espacio (ordenamiento y búsqueda).
+        </div>
+      </div>
+    </section>
+
+    <div class="btn-group">
+      <a href="hash.html" class="btn btn-outline">← 6.3 Hash</a>
+      <a href="practica.html" class="btn btn-primary">Ir a la práctica →</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div><strong>Estructura de Datos (AED-1026)</strong> · Tema 6 · Comparativa</div>
+      <div>Material didáctico abierto</div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

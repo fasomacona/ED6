@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6.1 Búsqueda secuencial | Tema 6</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">ED</span>
+        Estructura de Datos
+      </a>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="secuencial.html" class="active">6.1 Secuencial</a>
+        <a href="binaria.html">6.2 Binaria</a>
+        <a href="hash.html">6.3 Hash</a>
+        <a href="comparativa.html">Comparativa</a>
+        <a href="practica.html">Práctica</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 2rem;">
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a> › 6.1 Búsqueda secuencial
+    </div>
+
+    <h1 class="section-title"><span class="num">6.1</span> Búsqueda secuencial (lineal)</h1>
+
+    <div class="card">
+      <p>
+        La <strong>búsqueda secuencial</strong> examina los elementos de la colección
+        <strong>uno por uno</strong>, desde el inicio hasta encontrar la clave o agotar la lista.
+        No requiere que los datos estén ordenados.
+      </p>
+    </div>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">A</span> Algoritmo básico</h2>
+      <div class="card">
+<pre><code>def busqueda_secuencial(lista, objetivo):
+    """Retorna el índice del objetivo o -1 si no está."""
+    for i in range(len(lista)):
+        if lista[i] == objetivo:
+            return i
+    return -1
+
+# Ejemplo
+datos = [4, 2, 9, 1, 7, 5]
+print(busqueda_secuencial(datos, 7))   # 4
+print(busqueda_secuencial(datos, 3))   # -1
+</code></pre>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Caso</th><th>Comparaciones</th><th>Complejidad</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Mejor (está al inicio)</td><td>1</td><td><span class="badge badge-o1">O(1)</span></td></tr>
+              <tr><td>Promedio</td><td>≈ n/2</td><td><span class="badge badge-on">O(n)</span></td></tr>
+              <tr><td>Peor (al final o no está)</td><td>n</td><td><span class="badge badge-on">O(n)</span></td></tr>
+              <tr><td>Espacio auxiliar</td><td>—</td><td><span class="badge badge-o1">O(1)</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">B</span> Variante con centinela</h2>
+      <div class="card">
+        <p>
+          Se coloca el objetivo al final de una copia (o en una posición extra) para
+          eliminar la comprobación de “fin de lista” en cada iteración. Puede ganar un poco
+          de eficiencia en implementaciones de bajo nivel.
+        </p>
+<pre><code>def busqueda_con_centinela(lista, objetivo):
+    a = lista + [objetivo]   # centinela al final
+    i = 0
+    while a[i] != objetivo:
+        i += 1
+    if i < len(lista):
+        return i
+    return -1
+</code></pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">C</span> Búsqueda secuencial en lista ordenada</h2>
+      <div class="card">
+        <p>
+          Si la lista <strong>está ordenada</strong>, se puede abortar antes cuando el elemento
+          actual supera al objetivo (ya no puede estar más adelante).
+        </p>
+<pre><code>def secuencial_ordenada(lista, objetivo):
+    for i, x in enumerate(lista):
+        if x == objetivo:
+            return i
+        if x > objetivo:   # el resto es aún mayor
+            return -1
+    return -1
+</code></pre>
+        <p>Sigue siendo O(n) en el peor caso, pero reduce el promedio cuando el elemento no está.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">D</span> Cuándo usarla</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>✅ Adecuada cuando</h3>
+          <ul>
+            <li>n es pequeño</li>
+            <li>Los datos no están (ni conviene) ordenados</li>
+            <li>Se hacen pocas búsquedas</li>
+            <li>La estructura no soporta acceso por índice eficiente (ej. lista enlazada)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>❌ Evitar cuando</h3>
+          <ul>
+            <li>n es grande y se busca muchas veces</li>
+            <li>Se puede mantener la colección ordenada o usar hash</li>
+            <li>Se necesita respuesta en tiempo casi constante</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="btn-group">
+      <a href="index.html" class="btn btn-outline">← Inicio</a>
+      <a href="binaria.html" class="btn btn-primary">Siguiente: 6.2 Binaria →</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div><strong>Estructura de Datos (AED-1026)</strong> · Tema 6.1</div>
+      <div>Material didáctico abierto</div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

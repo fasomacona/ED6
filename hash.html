@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6.3 Búsqueda por HASH | Tema 6</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">ED</span>
+        Estructura de Datos
+      </a>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="secuencial.html">6.1 Secuencial</a>
+        <a href="binaria.html">6.2 Binaria</a>
+        <a href="hash.html" class="active">6.3 Hash</a>
+        <a href="comparativa.html">Comparativa</a>
+        <a href="practica.html">Práctica</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 2rem;">
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a> › 6.3 Búsqueda por funciones de HASH
+    </div>
+
+    <h1 class="section-title"><span class="num">6.3</span> Búsqueda por funciones de HASH</h1>
+
+    <div class="card">
+      <p>
+        Una <strong>tabla hash</strong> transforma la clave en un índice de un arreglo mediante
+        una <strong>función hash</strong>. Idealmente, la búsqueda, inserción y eliminación
+        se realizan en tiempo <span class="badge badge-o1">O(1)</span> promedio.
+      </p>
+    </div>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">A</span> Función hash</h2>
+      <div class="card">
+        <p>
+          Una función hash <em>h</em> mapea una clave a un entero en el rango
+          <code>[0, m)</code>, donde <em>m</em> es el tamaño de la tabla.
+        </p>
+        <h4>Propiedades deseables</h4>
+        <ul>
+          <li><strong>Determinista:</strong> misma clave → mismo índice.</li>
+          <li><strong>Uniforme:</strong> distribuye las claves de forma pareja en las casillas.</li>
+          <li><strong>Rápida de calcular.</strong></li>
+          <li>Minimiza <strong>colisiones</strong> (dos claves distintas con el mismo hash).</li>
+        </ul>
+        <h4>Ejemplos simples</h4>
+<pre><code># Método de la división
+def hash_division(clave, m):
+    return clave % m
+
+# Para cadenas: polinomial
+def hash_cadena(s, m, base=31):
+    h = 0
+    for c in s:
+        h = (h * base + ord(c)) % m
+    return h
+</code></pre>
+        <div class="callout">
+          <strong>En la práctica</strong>
+          Los lenguajes usan funciones hash robustas (y a menudo aleatorizadas).
+          En Python, <code>dict</code> y <code>set</code> están implementados con tablas hash.
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">B</span> Colisiones</h2>
+      <div class="card">
+        <p>
+          Cuando dos claves distintas producen el mismo índice, hay una <strong>colisión</strong>.
+          Hay que resolverlas. Las dos estrategias principales:
+        </p>
+
+        <h3>1. Encadenamiento (chaining)</h3>
+        <p>
+          Cada casilla de la tabla es una lista (u otra estructura) de elementos que hashearon a ese índice.
+        </p>
+        <div class="diagram">
+tabla[0] → None<br>
+tabla[1] → [claveA] → [claveB] → None<br>
+tabla[2] → [claveC] → None<br>
+…
+        </div>
+<pre><code>class TablaHashEncadenada:
+    def __init__(self, m=10):
+        self.m = m
+        self.tabla = [[] for _ in range(m)]
+
+    def _hash(self, clave):
+        return hash(clave) % self.m
+
+    def insertar(self, clave, valor):
+        i = self._hash(clave)
+        for j, (k, v) in enumerate(self.tabla[i]):
+            if k == clave:
+                self.tabla[i][j] = (clave, valor)
+                return
+        self.tabla[i].append((clave, valor))
+
+    def buscar(self, clave):
+        i = self._hash(clave)
+        for k, v in self.tabla[i]:
+            if k == clave:
+                return v
+        return None
+
+    def eliminar(self, clave):
+        i = self._hash(clave)
+        for j, (k, v) in enumerate(self.tabla[i]):
+            if k == clave:
+                del self.tabla[i][j]
+                return True
+        return False
+</code></pre>
+        <p>
+          Factor de carga α = n/m. Tiempo promedio de búsqueda ≈ O(1 + α).
+          Si α se mantiene acotado (redimensionando), la búsqueda es O(1) promedio.
+        </p>
+
+        <h3>2. Direccionamiento abierto (open addressing)</h3>
+        <p>
+          Todos los elementos viven en el arreglo. Si hay colisión, se sondea otra casilla
+          (lineal, cuadrática o hash doble) hasta encontrar un hueco o la clave.
+        </p>
+<pre><code># Sondeo lineal: h(k, i) = (h'(k) + i) mod m
+def buscar_abierto(tabla, clave, m):
+    i = 0
+    while i < m:
+        idx = (hash(clave) + i) % m
+        if tabla[idx] is None:
+            return None          # no está
+        if tabla[idx][0] == clave:
+            return tabla[idx][1]
+        i += 1
+    return None
+</code></pre>
+        <p>El factor de carga debe mantenerse &lt; 1 (típicamente &lt; 0.7) para buen rendimiento.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">C</span> Complejidad</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Operación</th>
+              <th>Promedio</th>
+              <th>Peor caso</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Búsqueda / inserción / eliminación</td>
+              <td><span class="badge badge-o1">O(1)</span></td>
+              <td><span class="badge badge-on">O(n)</span> (todas las claves colisionan)</td>
+            </tr>
+            <tr>
+              <td>Espacio</td><td colspan="2"><span class="badge badge-on">O(m + n)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        El peor caso es raro con buenas funciones hash y redimensionamiento.
+        Por eso en la práctica se considera tiempo constante amortizado.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">D</span> Aplicaciones</h2>
+      <div class="grid-2">
+        <div class="feature-card">
+          <div class="icon">📘</div>
+          <h3>Diccionarios y sets</h3>
+          <p><code>dict</code> y <code>set</code> en Python; HashMap en Java.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🗄️</div>
+          <h3>Índices y cachés</h3>
+          <p>Bases de datos, memoización, caches de páginas.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🔐</div>
+          <h3>Verificación de integridad</h3>
+          <p>Checksums, firmas (con funciones criptográficas distintas).</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🧩</div>
+          <h3>Detección de duplicados</h3>
+          <p>Comprobar pertenencia en tiempo constante promedio.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="btn-group">
+      <a href="binaria.html" class="btn btn-outline">← 6.2 Binaria</a>
+      <a href="comparativa.html" class="btn btn-primary">Siguiente: Comparativa →</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div><strong>Estructura de Datos (AED-1026)</strong> · Tema 6.3</div>
+      <div>Material didáctico abierto</div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>6.2 Búsqueda binaria | Tema 6</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="container nav-wrapper">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">ED</span>
+        Estructura de Datos
+      </a>
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="secuencial.html">6.1 Secuencial</a>
+        <a href="binaria.html" class="active">6.2 Binaria</a>
+        <a href="hash.html">6.3 Hash</a>
+        <a href="comparativa.html">Comparativa</a>
+        <a href="practica.html">Práctica</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">🌙</button>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 2rem;">
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a> › 6.2 Búsqueda binaria
+    </div>
+
+    <h1 class="section-title"><span class="num">6.2</span> Búsqueda binaria</h1>
+
+    <div class="card">
+      <p>
+        La <strong>búsqueda binaria</strong> requiere que la colección esté <strong>ordenada</strong>.
+        En cada paso se compara el objetivo con el elemento del medio y se descarta la mitad
+        en la que no puede estar. Reduce el espacio de búsqueda de forma logarítmica.
+      </p>
+      <div class="callout warning">
+        <strong>Requisito indispensable</strong>
+        Si la lista no está ordenada, el resultado puede ser incorrecto. Ordenar antes cuesta
+        O(n log n); solo compensa si se hacen muchas búsquedas sobre la misma colección.
+      </div>
+    </div>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">A</span> Versión iterativa</h2>
+      <div class="card">
+<pre><code>def busqueda_binaria(lista, objetivo):
+    """Lista debe estar ordenada de forma ascendente.
+    Retorna el índice o -1."""
+    izq, der = 0, len(lista) - 1
+    while izq <= der:
+        medio = (izq + der) // 2
+        if lista[medio] == objetivo:
+            return medio
+        if lista[medio] < objetivo:
+            izq = medio + 1
+        else:
+            der = medio - 1
+    return -1
+</code></pre>
+        <div class="diagram" style="text-align: left; line-height: 1.7;">
+lista = [1, 3, 5, 7, 9, 11, 13] &nbsp; objetivo = 9<br>
+<br>
+izq=0, der=6, medio=3 → 7 &lt; 9 → izq = 4<br>
+izq=4, der=6, medio=5 → 11 &gt; 9 → der = 4<br>
+izq=4, der=4, medio=4 → 9 == 9 → encontrado
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">B</span> Versión recursiva</h2>
+      <div class="card">
+<pre><code>def busqueda_binaria_rec(lista, objetivo, izq=0, der=None):
+    if der is None:
+        der = len(lista) - 1
+    if izq > der:
+        return -1
+    medio = (izq + der) // 2
+    if lista[medio] == objetivo:
+        return medio
+    if lista[medio] < objetivo:
+        return busqueda_binaria_rec(lista, objetivo, medio + 1, der)
+    return busqueda_binaria_rec(lista, objetivo, izq, medio - 1)
+</code></pre>
+        <p>Misma complejidad temporal; usa O(log n) de espacio en la pila (la iterativa usa O(1)).</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">C</span> Complejidad</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Caso</th><th>Comparaciones</th><th>Complejidad</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Mejor (justo en el medio)</td><td>1</td><td><span class="badge badge-o1">O(1)</span></td></tr>
+            <tr><td>Promedio / peor</td><td>≈ log₂(n)</td><td><span class="badge badge-ologn">O(log n)</span></td></tr>
+            <tr><td>Espacio (iterativa)</td><td>—</td><td><span class="badge badge-o1">O(1)</span></td></tr>
+            <tr><td>Espacio (recursiva)</td><td>—</td><td><span class="badge badge-ologn">O(log n)</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Para n = 1 000 000: secuencial hasta ~10⁶ comparaciones; binaria como máximo ~20.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">D</span> Variantes útiles</h2>
+      <div class="card">
+        <h3>Límite inferior / superior (lower_bound / upper_bound)</h3>
+        <p>
+          Encontrar la primera posición donde se podría insertar el objetivo manteniendo el orden,
+          o el primer elemento estrictamente mayor. Muy usadas en programación competitiva y en
+          <code>bisect</code> de Python.
+        </p>
+<pre><code>import bisect
+
+lista = [1, 3, 3, 3, 7, 9]
+# Primera posición de 3
+print(bisect.bisect_left(lista, 3))   # 1
+# Posición después del último 3
+print(bisect.bisect_right(lista, 3))  # 4
+</code></pre>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title"><span class="num">E</span> Cuándo usarla</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>✅ Adecuada cuando</h3>
+          <ul>
+            <li>Los datos están (o se pueden mantener) ordenados</li>
+            <li>n es mediano o grande</li>
+            <li>Se hacen muchas búsquedas sobre la misma colección ordenada</li>
+            <li>Se necesita también localizar rangos (lower/upper bound)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Limitaciones</h3>
+          <ul>
+            <li>Requiere orden previo (costoso si los datos cambian mucho)</li>
+            <li>Acceso aleatorio eficiente (arreglos); en listas enlazadas no conviene</li>
+            <li>Para acceso “casi O(1)” con muchas actualizaciones, hash suele ser mejor</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="btn-group">
+      <a href="secuencial.html" class="btn btn-outline">← 6.1 Secuencial</a>
+      <a href="hash.html" class="btn btn-primary">Siguiente: 6.3 Hash →</a>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div><strong>Estructura de Datos (AED-1026)</strong> · Tema 6.2</div>
+      <div>Material didáctico abierto</div>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
